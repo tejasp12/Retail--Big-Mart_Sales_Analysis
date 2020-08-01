@@ -12,7 +12,7 @@ Let's first try to understand what could affect the target variable "Sales"?
 4. Store size and location
 5. Items with more shelf space sell more.
 ---
-The whole solution is divided into 7 parts namely:
+The whole solution is divided into 8 parts namely:
 1. Get the Training data.
 2. Clean the Training dataset.
 3. Explore the Training dataset and perform feature engineering.
@@ -20,5 +20,6 @@ The whole solution is divided into 7 parts namely:
 5. Build the Model.
 6. Perform Predictions.
 7. Evaluate the Model with error metrics.
+8. Final words on **Improvement of Model's Predictive Power.**
 ---
 #### 1.Get the Training data:
