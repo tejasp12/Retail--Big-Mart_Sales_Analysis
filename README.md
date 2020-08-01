@@ -4,7 +4,7 @@
 ### Problem Statement:
   We have a data of One Thousand Five Hundred and Fifty Nine products across 10 stores of Big-Mart chain in 10 cities.The aim is to build a Predictive Model and find out the sale of each product at a perticular store.
 ### Value to Business:
-  __"_Using this predictive model,the decision makers of the BigMart will try to understand the properties of various products and stores which play an important in optimizing their Marketing efforts and results in increased sales._"__ 
+  __"_Using this predictive model,the decision makers of the BigMart will try to understand the properties of various products and stores which play will an important in optimizing their Marketing efforts and results in increased sales._"__ 
 
 Let's first try to understand what could affect the target variable "Sales"?
 1. The day of the week - Weekends are tend to more busier than weekdays
