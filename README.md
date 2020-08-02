@@ -20,7 +20,7 @@ The whole solution is divided into 8 parts namely:
 4. Get the Testining data and do the same treatments that performed on Training dataset.
 5. Build the Model.
 6. Import Test Dataset.
-   6.1 Perform the same treatments on Test Dataset.
+   * Perform the same treatments on Test Dataset.
 7. Perform Predictions.
 8. Evaluate the Model with error metrics.
 9. Final words on **Improvement of Model's Predictive Power.**
@@ -61,3 +61,54 @@ In this,we are going to do a lot of subtasks and these are:
 * Distribution of the univariate variables and treatment for outliers.
 Let's go one by one...!
 ##### Imputation of missing values:
+> It is good practice to identify and replace missing values for each column in input dataset prior to training of the model.This is called **missing data imputation**, or **imputing** in short way.
+
+We can use `train_dataset.isnull().sum()`or `train_dataset.isna().sum()`function to check number of missing values in each of the feature columns.There are various approaches for imputation of missing values and most common and very basics are:
+1.If column contains categorical values and presence of missing values : Replace missing values with **Mode** value.
+2.If column contains numerical values and presence of missing values : Replace missing values with either **mean** or **median** value.As **mean** is highly affect by the presence of outliers it is best to replace with **median** value.
+After executing the null value check command,we get the following as an output:
+```
+Item_Identifier                 0
+Item_Weight                  1463
+Item_Fat_Content                0
+Item_Visibility                 0
+Item_Type                       0
+Item_MRP                        0
+Outlet_Identifier               0
+Outlet_Establishment_Year       0
+Outlet_Size                  2410
+Outlet_Location_Type            0
+Outlet_Type                     0
+Item_Outlet_Sales               0
+dtype: int64
+```
+And by observing the above output we can clearly say that the columns `Item_Weight` and `Outlet_Size` have missing values.Now,as I said before the basic imputation is depend on the type of the data in that respective column and we can see the type of each column using `train_dataset.dtypes` command and we get the output:
+```
+Item_Identifier               object
+Item_Weight                  float64
+Item_Fat_Content              object
+Item_Visibility              float64
+Item_Type                     object
+Item_MRP                     float64
+Outlet_Identifier             object
+Outlet_Establishment_Year      int64
+Outlet_Size                   object
+Outlet_Location_Type          object
+Outlet_Type                   object
+Item_Outlet_Sales            float64
+dtype: object
+```
+By observing the above output we can say that `Item_Weight` is a **numerical column** and `Outlet_Size` is a **categorical column.** And as I said before we can use **mean or median** strategy to impute missing values in numerical column case and **mode** value in case categorical column case. 
+Using the following code we can impute the missing values for both the columns:
+* For column `Item_Weight`:
+```
+#Fill missing values with 'mean' value of Item weights:
+train_dataset['Item_Weight'] = train_dataset['Item_Weight'].fillna(train_dataset['Item_Weight'].mean())
+```
+* For column `Outlet_Size`:
+```
+#Fill missing values with mode' value of Outlet_Size:
+train_dataset['Outlet_Size'] = train_dataset['Outlet_Size'].fillna(train_dataset['Outlet_Size'].mode()[0])
+```
+##### Treatment for typos:
+
