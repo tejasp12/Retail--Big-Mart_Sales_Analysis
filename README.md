@@ -111,4 +111,43 @@ train_dataset['Item_Weight'] = train_dataset['Item_Weight'].fillna(train_dataset
 train_dataset['Outlet_Size'] = train_dataset['Outlet_Size'].fillna(train_dataset['Outlet_Size'].mode()[0])
 ```
 ##### Treatment for typos:
+After observing unique values in some categorical variables I have found that there are presence of typos.This means that,the same category is defind using 2 or 3 different variables. Let me elaborate this using following example:
+By observing the data types of the variables there are presence of 6 categorical variables and these are:`Item_Fat_Content`,`Item_Type`,`Outlet_Identifier`,`Outlet_Size`,`Outlet_Location_Type`,`Outlet_Type`.Let's see the unique values in each of these variables:
+```
+train_dataset['Item_Fat_Content'].unique()
+>>array(['Low Fat', 'Regular', 'low fat', 'LF', 'reg'], dtype=object)
 
+train_dataset['Item_Type'].unique()
+>>array(['Dairy', 'Soft Drinks', 'Meat', 'Fruits and Vegetables',
+       'Household', 'Baking Goods', 'Snack Foods', 'Frozen Foods',
+       'Breakfast', 'Health and Hygiene', 'Hard Drinks', 'Canned',
+       'Breads', 'Starchy Foods', 'Others', 'Seafood'], dtype=object)
+
+train_dataset['Outlet_Identifier'].unique()
+>>array(['OUT049', 'OUT018', 'OUT010', 'OUT013', 'OUT027', 'OUT045',
+       'OUT017', 'OUT046', 'OUT035', 'OUT019'], dtype=object)
+       
+train_dataset['Outlet_Size'].unique()
+>>array(['Medium', nan, 'High', 'Small'], dtype=object)
+
+train_dataset['Outlet_Location_Type'].unique()
+>>array(['Tier 1', 'Tier 3', 'Tier 2'], dtype=object)
+
+train_dataset['Outlet_Type'].unique()
+>>array(['Supermarket Type1', 'Supermarket Type2', 'Grocery Store',
+       'Supermarket Type3'], dtype=object)
+```
+By observing the output we can clearly see that the variable `Item_Fat_Content` contains only 2 unique values namely `Low Fat and Regular` but seems some typos like `low fat,LF,reg` etc.These typos represent the same categories but written wrongly.So,we need to clear these so that we can perform the further analysis.This can be done using the following command:
+```
+#Replacing all representations of variable 'Low Fat':
+filt_training_dataset['Item_Fat_Content'] = filt_training_dataset['Item_Fat_Content'].replace(['low fat','LF'],'Low Fat')
+
+#Replacing all representations of 'Regular':
+filt_training_dataset['Item_Fat_Content'] = filt_training_dataset['Item_Fat_Content'].replace('reg','Regular')
+
+We can see the output after doing above:
+train_dataset['Item_Fat_Content'].unique()
+>>array(['Low Fat', 'Regular'], dtype=object)----Represent only 2 unique categories.
+```
+##### Distribution of the univariate variables and treatment for outliers:
+Distribution of **Item_Visibility** variable:
