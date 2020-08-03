@@ -151,3 +151,25 @@ train_dataset['Item_Fat_Content'].unique()
 ```
 ##### Distribution of the univariate variables and treatment for outliers:
 Distribution of **Item_Visibility** variable:
+
+![download](https://user-images.githubusercontent.com/32562117/89148456-82c51500-d577-11ea-8f67-48cb90e24a0e.png)
+
+As we can see from the above fig.that the distribution of the variable is **a non-Gaussian distribution** and as we know a good statistic for summarizing a non-Gaussian distribution sample of data is the Interquartile Range, or IQR for short.
+```
+#=================Removing the Outliers==================#:
+#Define first Quartile range:
+Q1 = train_dataset['Item_Visibility'].quantile(0.25)
+#Define third Quartile range:
+Q3 = train_dataset['Item_Visibility'].quantile(0.75)
+#Define IQR range:
+IQR = Q3 - Q1
+#Remove the outliers:
+filt_training_dataset = train_dataset.query('(@Q1 - 1.5*@IQR) <= Item_Visibility <= (@Q3 + 1.5*@IQR)')
+```
+Check the shape of the Training and newly created filtered training dataset:
+```
+#Check the shape of the resulting dataset:
+filt_training_dataset.shape , train_dataset.shape
+>>((8379, 13), (8523, 13))
+```
+#### Explore the Training dataset and perform feature engineering:
