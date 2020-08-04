@@ -235,3 +235,4 @@ After dropping the columns those One-Hot Encoded and splitting the data into Fea
 * Training Features:
 
 [Training Data.xlsx](https://github.com/tejasp12/Retail--Big-Mart_Sales_Analysis/files/5020691/Training.Data.xlsx)
+##### Feature Scaling:
