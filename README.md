@@ -233,3 +233,5 @@ filt_training_dataset = pd.concat([filt_training_dataset,dummy],axis=1)
 ```
 After dropping the columns those One-Hot Encoded and splitting the data into Features and Labels,the resulting dataframe is looks like following:
 * Training Features:
+
+[Training Data.xlsx](https://github.com/tejasp12/Retail--Big-Mart_Sales_Analysis/files/5020691/Training.Data.xlsx)
