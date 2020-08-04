@@ -1,5 +1,6 @@
 # Big-Mart-Sales_Analysis: A Multiple Linear Regression Problem
 ## Domain:Retail
+## Model Stage:Prototype
 ## How I approched the problem and built a Regression Model to predict the sales:
 ### Problem Statement:
   We have a data of One Thousand Five Hundred and Fifty Nine products across 10 stores of Big-Mart chain in 10 cities.The aim is to build a Predictive Model and find out the sale of each product at a perticular store.
@@ -173,3 +174,62 @@ filt_training_dataset.shape , train_dataset.shape
 >>((8379, 13), (8523, 13))
 ```
 #### Explore the Training dataset and perform feature engineering:
+By exploring the dataset, we can observe that the column `Item_Visibility`contain the numerical values that shows the percentage of the visibility of the item.These numbers seems quite difficult while interpreting with them as a visibility and we can encode them as:
+* Low Visibility
+* Medium Visibility
+* High Visibility
+>After performed this transformation,we can easily encode those 3 bins using Label Encoder.
+Now,we know the Min Vsibility and Max Visibility values and using the Mean Visibility values we can define the range as follows:
+```
+#Check for minimum value in column 'Item_Visibility':
+filt_training_dataset['Item_Visibility'].min()
+>>0.0
+
+#Check for max value in column 'Item_Visibility':
+filt_training_dataset['Item_Visibility'].max()
+>>0.195721125
+
+#Check for mean value in column 'Item_Visibility':
+np.mean(filt_training_dataset['Item_Visibility'])
+>>0.0630612878336319
+```
+So, we can set the logic like follows to find the range to fall categories:Low Visibility , Medium Visibility and High Visibility
+```
+# Modifying the values under the column Item_Visibility into categories as low_visibility,medium_visibility and high_visibility:
+#If:
+#   0.0 <= Item_Visibility < 0.063:
+#       return 'Low_Viz'
+#If:
+#   0.063 <= Item_Visibility < 0.13:
+#       return 'Med_Viz'
+#If:
+#   0.13 <= Item_Visibility <= 0.19:
+#        return 'High_VIz'
+>>filt_training_dataset['Item_Visibility_bins'] = pd.cut(filt_training_dataset['Item_Visibility'],[0.000,0.063,0.13,0.19],labels=['Low_Viz','Med Viz','High_Viz'])
+```
+After doing this,we check the null values in column `Item_Visibility` and found out there are **526** missing values present in the column and we can replace them using the category `Low_Viz` since this is the most occouring category and since this is categorical column we use the 'mode'to fill out the missing values.
+##### Perform Label Encoding::
+Now, we are performing Label Encoding for some categorical variables.After viewing the data typs of variables we have 4 categorical columns to encode.
+> ##### When to use Label Encoding and When to use One-Hot Encoding:
+* When categories in the variable are Ordinal in Nature then in that case we use **Label Encoding**.
+* When categories in the variable are Nominal in Nature then in that case we use **One-Hot Encoding**
+```
+#Transforming 'Item_Visibility_bins':
+filt_training_dataset['Item_Visibility_bins'] = label_encoder.fit_transform(filt_training_dataset['Item_Visibility_bins'])
+
+#Transforming 'Outlet_Size':
+filt_training_dataset['Outlet_Size'] = label_encoder.fit_transform(filt_training_dataset['Outlet_Size'])
+
+#Transforming 'Outlet_Location_Type':
+filt_training_dataset['Outlet_Location_Type'] = label_encoder.fit_transform(filt_training_dataset['Outlet_Location_Type'])
+```
+##### Perform One-Hot Encoding:
+```
+# Let's create dummies for 'Outlet_Type':
+dummy = pd.get_dummies(filt_training_dataset['Outlet_Type'])
+
+# Merging both Dataframes--- filt_training_dataset + dummy
+filt_training_dataset = pd.concat([filt_training_dataset,dummy],axis=1)
+```
+After dropping the columns those One-Hot Encoded and splitting the data into Features and Labels,the resulting dataframe is looks like following:
+* Training Features:
