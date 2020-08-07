@@ -4,7 +4,7 @@
 ## Model Stage:Prototype
 ## How I approched the problem and built a Regression Model to predict the sales:
 ### Problem Statement:
-  We have a data of One Thousand Five Hundred and Fifty Nine products across 10 stores of Big-Mart chain in 10 cities.The aim is to build a Predictive Model and find out the sale of each product at a perticular store.
+  We have a data of One Thousand Five Hundred and Fifty Nine products across 10 stores of Big-Mart chain in 10 cities.The aim is to build a Predictive Model and predict the sale of each product at a perticular store.
 ### Value to Business:
   __"_Using this predictive model,the decision makers of the BigMart will try to understand the properties of various products and stores which play an important in optimizing their Marketing efforts and results in increased sales._"__ 
 
@@ -236,4 +236,7 @@ After dropping the columns those One-Hot Encoded and splitting the data into Fea
 * Training Features:
 
 [Training Data.xlsx](https://github.com/tejasp12/Retail--Big-Mart_Sales_Analysis/files/5020691/Training.Data.xlsx)
+##### Feature Importance:
+
 ##### Feature Scaling:
+Data Scaling is the most important step before feeding data to the model for training.Scaling brings the data on a **standard scale.**
