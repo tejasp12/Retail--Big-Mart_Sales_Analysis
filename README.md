@@ -236,7 +236,34 @@ After dropping the columns those One-Hot Encoded and splitting the data into Fea
 * Training Features:
 
 [Training Data.xlsx](https://github.com/tejasp12/Retail--Big-Mart_Sales_Analysis/files/5020691/Training.Data.xlsx)
-##### Feature Importance:
+##### Feature Importance and Selection:
+Feature Importance in short tells us **detecting the variables which are un-necesary for predictive model building.** In other words,finding those variables which contribute less in the model's prediction.
+To find out this,we are using `f-regression` module from `sklearn.preprocessing` library:
+```
+#Import 'f_regression' module from Sklearn library:
+from sklearn.feature_selection import f_regression
 
+#Fit the Training data and Training labels:
+#The first array contains the F-Statistics for each of the Regressions.
+#The second array contains the P-Values associated with F-Statistics.
+f_regression(X_train,y_train)
+>>(array([7.36934884e-01, 4.98178278e+01, 6.51204837e+01, 3.60188985e+01,
+        2.54888893e+01, 1.50946829e+03, 6.14724015e+01, 1.70225059e+01,
+        8.81921198e+02, 3.79468521e+00, 3.79468521e+00, 3.28342992e+03]),
+ array([3.90669087e-001, 1.82160212e-012, 8.02208463e-016, 2.03539119e-009,
+        4.54313821e-007, 9.61521450e-304, 5.04164914e-015, 3.72969759e-005,
+        2.35334436e-184, 5.14489065e-002, 5.14489065e-002, 0.00000000e+000]))
+# We only interested in P-Values:
+p_vals = f_regression(X_train,y_train)[1]
+p_vals
+>>array([3.90669087e-001, 1.82160212e-012, 8.02208463e-016, 2.03539119e-009,
+       4.54313821e-007, 9.61521450e-304, 5.04164914e-015, 3.72969759e-005,
+       2.35334436e-184, 5.14489065e-002, 5.14489065e-002, 0.00000000e+000])
+#Rounding upto 3 digits after decimal point:
+p_vals.round(3)
+>>array([0.391, 0.   , 0.   , 0.   , 0.   , 0.   , 0.   , 0.   , 0.   ,
+       0.051, 0.051, 0.   ])
+```
+Each P-Value is associated with each feature in sequence and we can see from the above output that feature or column **Item_Weight** has very large P-Value(>0.05)and thus we won't consider this column during training. 
 ##### Feature Scaling:
 Data Scaling is the most important step before feeding data to the model for training.Scaling brings the data on a **standard scale.**
